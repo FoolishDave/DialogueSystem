@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 841ab02cfcbab684da8d4bfc3fbba799
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Chantal
+  fontNames:
+  - Chantal
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 5d33e1a4a7801df4a93555b68cc3c8df, type: 3}
+  - {fileID: 12800000, guid: 6092240ec21da8444af6a8eef4b348c8, type: 3}
+  - {fileID: 12800000, guid: 1c19eeefd63cfcd4bb8bb3b74ec242d8, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

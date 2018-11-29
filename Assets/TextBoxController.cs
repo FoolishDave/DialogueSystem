@@ -4,13 +4,14 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Linq;
+using DG.Tweening;
 
 public class TextBoxController : MonoBehaviour {
 
-    public enum TextEffect { Shake, Wave, Tremble }
-    private string[] customTags = { "shake", "wave", "tremble" };
+    public enum TextEffect { Shake, Wave, Tremble };
     private string[] stockTags = { "b", "i", "u", "sup", "sub", "pos", "size", "color" };
 
+    public float puppetMoveTime;
     public float typewriterTime;
     public float AngleMultiplier = 1.0f;
     public float SpeedMultiplier = 1.0f;
@@ -21,12 +22,14 @@ public class TextBoxController : MonoBehaviour {
     public TextMeshProUGUI textBoxDialogue;
     public TextMeshProUGUI textBoxChar;
     public Image charImg;
-    public bool waiting;
+    public bool waiting = true;
     public AudioSource audioSource;
+    public List<GameObject> puppets = new List<GameObject>();
     private bool skip;
     private bool textChanged;
     private List<TagData> tagData = new List<TagData>();
     private List<Coroutine> runningEffects = new List<Coroutine>();
+    private Queue<DialogueElement> dialogueQueue = new Queue<DialogueElement>();
 
     private struct VertexAnim
     {
@@ -48,7 +51,29 @@ public class TextBoxController : MonoBehaviour {
         TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
     }
 
-    void ON_TEXT_CHANGED(Object obj)
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && waiting)
+        {
+            Display(dialogueQueue.Dequeue());
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            typewriterTime /= 4;
+            puppetMoveTime /= 2;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            typewriterTime *= 4;
+            puppetMoveTime *= 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Skip();
+        }
+    }
+
+    void ON_TEXT_CHANGED(object obj)
     {
         if (obj == textBoxDialogue)
         {
@@ -56,11 +81,20 @@ public class TextBoxController : MonoBehaviour {
         }
     }
 
+    public void Enqueue(IEnumerable<DialogueElement> elements)
+    {
+        foreach (DialogueElement e in elements)
+        {
+            dialogueQueue.Enqueue(e);
+        }
+        Display(dialogueQueue.Dequeue());
+    }
+
     public void Display(DialogueElement element)
     {
-        textBoxChar.text = element.speakingName;
-        textBoxChar.color = element.speakingColor;
-        charImg.sprite = element.speakingSprite;
+        textBoxChar.text = element.charInfo.name;
+        textBoxChar.color = element.charInfo.color;
+        charImg.sprite = element.charInfo.sprite;
         textBoxDialogue.text = RemoveAndStoreTags(element.speakingDialogue);
         textBoxDialogue.maxVisibleCharacters = 0;
         StopEffects();
@@ -103,12 +137,12 @@ public class TextBoxController : MonoBehaviour {
         tagData.Clear();
         char[] charArr = text.ToCharArray();
         string sanitized = "";
-        int adjustedIndex = 0;
-        for (int i = 0; i < text.Length; i++, adjustedIndex++)
+        int builtInTagMod = 0;
+        for (int i = 0; i < text.Length; i++)
         {
             if (charArr[i] == '<')
             {
-                int startingIndex = adjustedIndex;
+                int startingIndex = sanitized.Length;
                 string tag = "";
                 while (charArr[i] != '>')
                 {
@@ -116,23 +150,22 @@ public class TextBoxController : MonoBehaviour {
                     tag += charArr[i];
                 }
                 tag = tag.Substring(0, tag.Length - 1);
-                if (customTags.Contains(tag.ToLower()) && !tag.Contains('/'))
+                TextEffect e;
+                if (System.Enum.TryParse(tag,true,out e))
                 {
-                    TagData tagD = new TagData { effect = (TextEffect)System.Array.IndexOf(customTags, tag.ToLower()), startIndex = startingIndex };
+                    TagData tagD = new TagData { effect = e, startIndex = startingIndex - builtInTagMod };
                     tagData.Add(tagD);
-                } else if (customTags.Contains(tag.ToLower().Substring(1)) && tag.Contains('/'))
+                } else if (System.Enum.TryParse(tag.Substring(1),true,out e))
                 {
                     tag = tag.Substring(1);
-                    TextEffect eff = (TextEffect)System.Array.IndexOf(customTags, tag.ToLower());
-                    int listIndex = tagData.FindLastIndex(td => td.effect == eff);
+                    int listIndex = tagData.FindLastIndex(td => td.effect == e);
                     TagData data = tagData[listIndex];
-                    data.endIndex = startingIndex;
+                    data.endIndex = sanitized.Length - builtInTagMod;
                     tagData[listIndex] = data;
                 } else
                 {
                     sanitized += "<" + tag + ">";
-                    adjustedIndex -= 1;
-                    if (tag.Contains('/')) adjustedIndex -= 1;
+                    builtInTagMod += tag.Length + 2;
                 }
             } else
             {
@@ -144,6 +177,7 @@ public class TextBoxController : MonoBehaviour {
 
     private IEnumerator TypewriterText(DialogueElement element)
     {
+        float lastTime = 0f;
         waiting = false;
         bool displaying = true;
         TMP_TextInfo textInfo = textBoxDialogue.textInfo;
@@ -151,10 +185,21 @@ public class TextBoxController : MonoBehaviour {
         while (i < textInfo.characterCount && displaying && !skip)
         {
             textBoxDialogue.maxVisibleCharacters = i;
-            if (element.fontSound != null)
+            if (element.charInfo.sound != null)
             {
                 audioSource.pitch = 1 + UnityEngine.Random.Range(-.17f, 0.17f);
-                audioSource.PlayOneShot(element.fontSound);
+                audioSource.PlayOneShot(element.charInfo.sound);
+            }
+            if (element.puppet != -1)
+            {
+                if (Time.time - lastTime > puppetMoveTime && puppets.Count > element.puppet)
+                {
+                    lastTime = Time.time;
+                    Transform t = puppets[element.puppet].transform;
+                    puppets[element.puppet].transform.DORotate(new Vector3(0,0,Random.Range(-10f, 10f)), puppetMoveTime);
+                    float y = puppets[element.puppet].transform.position.y;
+                    DOTween.Sequence().Append(t.DOMoveY(y+10, puppetMoveTime/2f)).Append(t.DOMoveY(y, puppetMoveTime/2f));
+                }
             }
             i++;
             yield return new WaitForSeconds(typewriterTime);
@@ -349,15 +394,22 @@ public class TextBoxController : MonoBehaviour {
     }
 }
 
+[CreateAssetMenu(fileName = "CharaInfo", menuName = "Dialogue/Info", order = 1)]
+public class CharacterDialogueInfo : ScriptableObject
+{
+    public string speakingName;
+    public Color color;
+    public Sprite sprite;
+    public AudioClip sound;
+}
+
 [System.Serializable]
 public class DialogueElement
 {
     public enum DialogueType { Standard }
 
     public DialogueType dialogueType;
-    public string speakingName;
     public string speakingDialogue;
-    public Color speakingColor;
-    public Sprite speakingSprite;
-    public AudioClip fontSound;
+    public CharacterDialogueInfo charInfo;
+    public int puppet = -1;
 }

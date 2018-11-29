@@ -5,7 +5,9 @@ using UnityEngine;
 public class DialogueManager : MonoBehaviour {
 
     public List<DialogueElement> dialogue;
-    public TextBoxController currentTextBox;
+    private TextBoxController currentTextBox;
+    public GameObject textBoxPrefab;
+    public Canvas canvas;
 
     public KeyCode startKey;
     public KeyCode nextKey;
@@ -21,23 +23,10 @@ public class DialogueManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(startKey))
+        if (Input.GetKeyDown(startKey) && currentTextBox == null)
         {
-            dialogueIndex = 0;
-            currentTextBox.Display(dialogue[dialogueIndex]);
-        } else if (Input.GetKeyDown(nextKey) && currentTextBox.waiting)
-        {
-            dialogueIndex++;
-            currentTextBox.Display(dialogue[dialogueIndex]);
-        } else if (Input.GetKeyDown(speedKey))
-        {
-            currentTextBox.typewriterTime /= 4;
-        } else if (Input.GetKeyUp(speedKey))
-        {
-            currentTextBox.typewriterTime *= 4;
-        } else if (Input.GetKeyDown(skipKey))
-        {
-            currentTextBox.Skip();
-        }
+            currentTextBox = Instantiate(textBoxPrefab, canvas.transform).GetComponent<TextBoxController>();
+            currentTextBox.Enqueue(dialogue);
+        } 
     }
 }

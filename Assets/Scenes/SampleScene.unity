@@ -142,103 +142,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
   - dialogueType: 0
-    speakingDialogue: <wave>Hello Potion Seller</wave>, <shake>I am going</shake>
-      <wave><u>into <b>battle</b></u></wave> and I want your <shake>strongest</shake>
-      potions.
-    charInfo: {fileID: 11400000, guid: 3ba05f42ee2e8cd45abfc3450d1efb74, type: 2}
+    speakingDialogue: Hey <wave>Hoouuurs</wave>!!!
+    charInfo: {fileID: 11400000, guid: 4f79f477ad0832142b58158291f93fd1, type: 2}
     puppet: 0
   - dialogueType: 0
-    speakingDialogue: My potions are too strong for you traveler.
-    charInfo: {fileID: 11400000, guid: 6f64b28f8a84dcc4287e72747b186ed1, type: 2}
+    speakingDialogue: Huh?
+    charInfo: {fileID: 11400000, guid: 64614296c737ae14ca898f33cdb96567, type: 2}
     puppet: 1
   - dialogueType: 0
-    speakingDialogue: Potion Seller, I tell you I am going into battle, and I want
-      only your strongest potions.
-    charInfo: {fileID: 11400000, guid: 3ba05f42ee2e8cd45abfc3450d1efb74, type: 2}
+    speakingDialogue: You're a <shake><b>nerrrrrd</b></shake>
+    charInfo: {fileID: 11400000, guid: 4f79f477ad0832142b58158291f93fd1, type: 2}
     puppet: 0
   - dialogueType: 0
-    speakingDialogue: You can't handle my potions. They're too strong for you.
-    charInfo: {fileID: 11400000, guid: 6f64b28f8a84dcc4287e72747b186ed1, type: 2}
-    puppet: 1
-  - dialogueType: 0
-    speakingDialogue: Potion Seller, listen to me; I want only your strongest potions.
-    charInfo: {fileID: 11400000, guid: 3ba05f42ee2e8cd45abfc3450d1efb74, type: 2}
+    speakingDialogue: OOOOOOHHHHH
+    charInfo: {fileID: 11400000, guid: 4f79f477ad0832142b58158291f93fd1, type: 2}
     puppet: 0
   - dialogueType: 0
-    speakingDialogue: My potions would kill you, traveler. You cannot handle my potions.
-    charInfo: {fileID: 11400000, guid: 6f64b28f8a84dcc4287e72747b186ed1, type: 2}
+    speakingDialogue: OOOOOOOOHHHHHH
+    charInfo: {fileID: 11400000, guid: 4f79f477ad0832142b58158291f93fd1, type: 2}
     puppet: 1
   - dialogueType: 0
-    speakingDialogue: Potion Seller, enough of these games. I'm going into battle
-      and I need your strongest potions.
-    charInfo: {fileID: 11400000, guid: 3ba05f42ee2e8cd45abfc3450d1efb74, type: 2}
+    speakingDialogue: <shake><b>OOOOOOOOOHHHHH</b></shake>
+    charInfo: {fileID: 11400000, guid: 4f79f477ad0832142b58158291f93fd1, type: 2}
     puppet: 0
-  - dialogueType: 0
-    speakingDialogue: My strongest potions would kill you, traveler. You can't handle
-      my strongest potions. You'd better go to a seller that sells weaker potions.
-    charInfo: {fileID: 11400000, guid: 6f64b28f8a84dcc4287e72747b186ed1, type: 2}
-    puppet: 1
-  - dialogueType: 0
-    speakingDialogue: Potion Seller, I'm telling you right now; I'm going into battle
-      and I need only your strongest potions.
-    charInfo: {fileID: 11400000, guid: 3ba05f42ee2e8cd45abfc3450d1efb74, type: 2}
-    puppet: 0
-  - dialogueType: 0
-    speakingDialogue: You don't know what you ask, traveler. My strongest potions
-      will kill a dragon let alone a man. You need a seller that sells weaker potions,
-      because my potions are too strong.
-    charInfo: {fileID: 11400000, guid: 6f64b28f8a84dcc4287e72747b186ed1, type: 2}
-    puppet: 1
-  - dialogueType: 0
-    speakingDialogue: Potion Seller, I'm telling you I need your strongest potions.
-      I'm going into battle! I'm going to battle and I need your strongest potions!
-    charInfo: {fileID: 11400000, guid: 3ba05f42ee2e8cd45abfc3450d1efb74, type: 2}
-    puppet: 0
-  - dialogueType: 0
-    speakingDialogue: You can't handle my strongest potions! No one can! My strongest
-      potions are fit for a beast let alone a man.
-    charInfo: {fileID: 11400000, guid: 6f64b28f8a84dcc4287e72747b186ed1, type: 2}
-    puppet: 1
-  - dialogueType: 0
-    speakingDialogue: Potion Seller, what do I have to tell you to get your potions?
-      Why won't you trust me with your strongest potions, Potion Seller? I need them
-      if I'm to be successful in the battle!
-    charInfo: {fileID: 11400000, guid: 3ba05f42ee2e8cd45abfc3450d1efb74, type: 2}
-    puppet: 0
-  - dialogueType: 0
-    speakingDialogue: I can't give you my strongest potions because my strongest potions
-      are only for the strongest beings and you are of the weakest.
-    charInfo: {fileID: 11400000, guid: 6f64b28f8a84dcc4287e72747b186ed1, type: 2}
-    puppet: 1
-  - dialogueType: 0
-    speakingDialogue: Well then that's it, Potion Seller. I'll go elsewhere. I'll
-      go elsewhere for my potions.
-    charInfo: {fileID: 11400000, guid: 3ba05f42ee2e8cd45abfc3450d1efb74, type: 2}
-    puppet: 0
-  - dialogueType: 0
-    speakingDialogue: That's what you'd better do.
-    charInfo: {fileID: 11400000, guid: 6f64b28f8a84dcc4287e72747b186ed1, type: 2}
-    puppet: 1
-  - dialogueType: 0
-    speakingDialogue: I'll go elsewhere for my potions and I'll never come back!
-    charInfo: {fileID: 11400000, guid: 3ba05f42ee2e8cd45abfc3450d1efb74, type: 2}
-    puppet: 0
-  - dialogueType: 0
-    speakingDialogue: Good. You're not welcome here! My potions are only for the strongest
-      and you're clearly are not of the strongest you're clearly the weakest.
-    charInfo: {fileID: 11400000, guid: 6f64b28f8a84dcc4287e72747b186ed1, type: 2}
-    puppet: 1
-  - dialogueType: 0
-    speakingDialogue: You've had your say, Potion Seller but I'll have mine. You're
-      a rascal, you're a rascal with no respect for knights. No respect for anything...except
-      your potions!
-    charInfo: {fileID: 11400000, guid: 3ba05f42ee2e8cd45abfc3450d1efb74, type: 2}
-    puppet: 0
-  - dialogueType: 0
-    speakingDialogue: Why respect knights...when my potions can do anything that you
-      can...
-    charInfo: {fileID: 11400000, guid: 6f64b28f8a84dcc4287e72747b186ed1, type: 2}
-    puppet: 1
   textBoxPrefab: {fileID: 1021177181625100, guid: 162d0739064e99a40a50f058f0d3cf7f,
     type: 2}
   canvas: {fileID: 1169635022}

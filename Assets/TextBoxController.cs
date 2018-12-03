@@ -92,14 +92,36 @@ public class TextBoxController : MonoBehaviour {
 
     public void Display(DialogueElement element)
     {
-        textBoxChar.text = element.charInfo.name;
+        textBoxChar.text = element.charInfo.speakingName;
         textBoxChar.color = element.charInfo.color;
         charImg.sprite = element.charInfo.sprite;
         textBoxDialogue.text = RemoveAndStoreTags(element.speakingDialogue);
         textBoxDialogue.maxVisibleCharacters = 0;
         StopEffects();
-        StartTextEffects();
-        StartCoroutine(TypewriterText(element));
+        if (element.puppet >= 0 && puppets[element.puppet] != null)
+        {
+            Image puppetImage = puppets[element.puppet].GetComponentsInChildren<Image>()[1];
+            if (puppetImage.sprite != element.charInfo.sprite)
+            {
+                Vector3 tr = puppets[element.puppet].transform.eulerAngles;
+                tr.y = 90;
+                Sequence seq = DOTween.Sequence();
+                seq.Append(puppets[element.puppet].transform.DORotate(tr, .2f));
+                seq.AppendCallback(() => puppetImage.sprite = element.charInfo.sprite);
+                seq.AppendInterval(.1f);
+                tr.y = 0;
+                seq.Append(puppets[element.puppet].transform.DORotate(tr, .1f));
+                seq.AppendCallback(() => { StartTextEffects(); StartCoroutine(TypewriterText(element)); });
+            } else
+            {
+                StartTextEffects();
+                StartCoroutine(TypewriterText(element));
+            }
+        } else
+        {
+            StartTextEffects();
+            StartCoroutine(TypewriterText(element));
+        }
     }
 
     public void Skip()
@@ -182,7 +204,7 @@ public class TextBoxController : MonoBehaviour {
         bool displaying = true;
         TMP_TextInfo textInfo = textBoxDialogue.textInfo;
         int i = 0;
-        while (i < textInfo.characterCount && displaying && !skip)
+        while (i <= textInfo.characterCount && displaying && !skip)
         {
             textBoxDialogue.maxVisibleCharacters = i;
             if (element.charInfo.sound != null)
@@ -392,15 +414,6 @@ public class TextBoxController : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
     }
-}
-
-[CreateAssetMenu(fileName = "CharaInfo", menuName = "Dialogue/Info", order = 1)]
-public class CharacterDialogueInfo : ScriptableObject
-{
-    public string speakingName;
-    public Color color;
-    public Sprite sprite;
-    public AudioClip sound;
 }
 
 [System.Serializable]

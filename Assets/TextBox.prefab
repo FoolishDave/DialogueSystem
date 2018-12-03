@@ -446,7 +446,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e474f70214bccf14c89fb854e6193635, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aa6fdce9ffcc53f48933e9889ae83bba, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -510,7 +510,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.05232735
     - serializedVersion: 3
-      time: 0.75
+      time: 0.325
       value: 1
       inSlope: 0
       outSlope: 0
@@ -519,16 +519,16 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.5
+      time: 0.75
       value: 0
-      inSlope: -1.4880666
-      outSlope: -1.4880666
+      inSlope: -3.1999998
+      outSlope: -3.1999998
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.07419419
+      outWeight: 0.5
     - serializedVersion: 3
-      time: 2.25
+      time: 1.125
       value: -1
       inSlope: 0
       outSlope: 0
@@ -537,7 +537,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 3
+      time: 1.5
       value: 0
       inSlope: 1.5572935
       outSlope: 1.5572935
@@ -949,6 +949,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 197.7, y: -174.2}
+  m_AnchoredPosition: {x: 70, y: -170}
   m_SizeDelta: {x: 253.84, y: 30.34}
   m_Pivot: {x: 0, y: 1}
